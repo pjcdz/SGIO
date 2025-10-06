@@ -1055,6 +1055,51 @@ Las siguientes funcionalidades **NO** están incluidas en el MVP v0.1 porque:
 
 ---
 
+### **CU-002: Consultar Detalle de Obra**
+
+| Caso de Uso ID: | CU-002 |
+|-----------------|---------|
+| **Caso de Uso Nombre:** | Consultar Detalle de Obra |
+| **Creado por:** | Grupo 5 | **Última actualización por:** | Grupo 5 |
+| **Fecha Creación:** | 09/09/2024 | **Fecha última actualización:** | 15/10/2024 |
+
+| **Actor:** | Director de Obra |
+|------------|------------------|
+| **Descripción:** | El Director accede a la vista detallada de una obra específica, visualizando información completa incluyendo datos generales, capataz responsable, avance global y línea de tiempo de 23 hitos constructivos. |
+| **Precondiciones:** | - El usuario ha iniciado sesión como "Director"<br>- El usuario está en el Dashboard de Obras (CU-001)<br>- La obra seleccionada existe en el sistema |
+| **Postcondiciones:** | - El Director visualiza toda la información relevante de la obra<br>- Puede evaluar el estado de avance y detectar hitos atrasados<br>- Puede navegar a otras funcionalidades desde esta vista |
+| **Prioridad:** | ALTA |
+| **Frecuencia de uso:** | Diaria (2-3 veces por día) |
+
+| **Flujo Normal:** | **Actor / Sistema** |
+|-------------------|---------------------|
+| 1. El Director selecciona una obra desde el Dashboard (CU-001) | Actor |
+| 2. El sistema carga y muestra la vista de detalle de la obra | Sistema |
+| 3. El sistema muestra información general: nombre, dirección, cliente, fechas, capataz | Sistema |
+| 4. El sistema muestra avance general con barra de progreso | Sistema |
+| 5. El sistema incluye automáticamente la Línea de Tiempo de Hitos (CU-003) | Sistema |
+| 6. El Director revisa la información presentada | Actor |
+
+| **Flujos Alternativos:** | **Actor / Sistema** |
+|---------------------------|---------------------|
+| **FA1: Navegar a Módulo de Costos** | |
+| 6a. El Director hace click en "Ver Costos" | Actor |
+| 6b. El sistema navega a CU-006 (Navegar a Módulo de Costos) | Sistema |
+| **FA2: Volver al Dashboard** | |
+| 6a. El Director hace click en "← Volver" | Actor |
+| 6b. El sistema regresa a CU-001 (Dashboard de Obras) | Sistema |
+
+| **Excepciones:** | |
+|------------------|--|
+| **EX1:** La obra no existe o fue eliminada | Sistema muestra mensaje "Obra no encontrada" y regresa al Dashboard |
+
+| **Includes:** | CU-003 (Visualizar Línea de Tiempo de Hitos) |
+| **Extends:** | Ninguno |
+| **Requerimientos No Funcionales:** | RNF-01 (intuitivo), RNF-03 (terminología del dominio), RNF-10 (responsive) |
+| **Notas:** | Esta vista es el punto central de navegación para información de una obra específica. En v1.0 se agregarán tabs para ver partes diarios, fotos y documentos asociados. |
+
+---
+
 ### **CU-003: Visualizar Línea de Tiempo de Hitos**
 
 | Caso de Uso ID: | CU-003 |
@@ -1093,6 +1138,356 @@ Las siguientes funcionalidades **NO** están incluidas en el MVP v0.1 porque:
 | **Extends:** | Ninguno |
 | **Requerimientos No Funcionales:** | RNF-03 (terminología del dominio), RNF-10 (responsive) |
 | **Notas:** | Los 23 hitos fueron validados con el Director en entrevista. En v1.0, el estado de hitos se actualizará según cierre real de fases. |
+
+---
+
+### **CU-004: Acceder a Archivo Central**
+
+| Caso de Uso ID: | CU-004 |
+|-----------------|---------|
+| **Caso de Uso Nombre:** | Acceder a Archivo Central |
+| **Creado por:** | Grupo 5 | **Última actualización por:** | Grupo 5 |
+| **Fecha Creación:** | 09/09/2024 | **Fecha última actualización:** | 15/10/2024 |
+
+| **Actor:** | Director de Obra |
+|------------|------------------|
+| **Descripción:** | El Director accede al repositorio central de templates de documentos técnicos y administrativos organizados en 6 categorías (Administrativos, Técnicos, Legales, Financieros, Seguridad, Calidad) con un total de 24 templates. |
+| **Precondiciones:** | - El usuario ha iniciado sesión como "Director"<br>- Existen templates pre-cargados en el sistema (24 documentos) |
+| **Postcondiciones:** | - El Director visualiza el catálogo de templates disponibles<br>- Puede buscar y filtrar documentos por categoría<br>- Puede acceder a la descarga de templates (simulada en MVP) |
+| **Prioridad:** | ALTA |
+| **Frecuencia de uso:** | Semanal (2-3 veces por semana) |
+
+| **Flujo Normal:** | **Actor / Sistema** |
+|-------------------|---------------------|
+| 1. El Director accede al Archivo Central desde el Dashboard o menú de navegación | Actor |
+| 2. El sistema carga y muestra la lista de 24 templates organizados | Sistema |
+| 3. El sistema agrupa los documentos por categoría con contador (ej: "Administrativos (6)") | Sistema |
+| 4. Para cada documento, el sistema muestra: nombre, descripción breve, categoría, formato | Sistema |
+| 5. El Director visualiza el catálogo completo de documentos | Actor |
+
+| **Flujos Alternativos:** | **Actor / Sistema** |
+|---------------------------|---------------------|
+| **FA1: Filtrar por Categoría** | |
+| 5a. El Director selecciona una categoría específica (CU-005) | Actor |
+| 5b. El sistema filtra y muestra solo documentos de esa categoría | Sistema |
+| **FA2: Buscar Documento** | |
+| 5a. El Director ingresa texto en el buscador | Actor |
+| 5b. El sistema filtra en tiempo real por nombre de documento | Sistema |
+| **FA3: Descargar Template** | |
+| 5a. El Director hace click en botón "Descargar" de un documento | Actor |
+| 5b. El sistema muestra toast "Descarga simulada en MVP" (en v1.0 descarga real) | Sistema |
+
+| **Excepciones:** | |
+|------------------|--|
+| **EX1:** No hay templates cargados | Sistema muestra mensaje "No hay documentos disponibles" |
+
+| **Includes:** | Puede incluir CU-005 (Filtrar Documentos por Categoría) |
+| **Extends:** | Ninguno |
+| **Requerimientos No Funcionales:** | RNF-01 (intuitivo), RNF-04 (navegación ≤3 clicks), RNF-10 (responsive) |
+| **Notas:** | Los 24 templates fueron definidos con el Director. Categorías: Administrativos (6), Técnicos (5), Legales (4), Financieros (4), Seguridad (3), Calidad (2). |
+
+---
+
+### **CU-005: Filtrar Documentos por Categoría**
+
+| Caso de Uso ID: | CU-005 |
+|-----------------|---------|
+| **Caso de Uso Nombre:** | Filtrar Documentos por Categoría |
+| **Creado por:** | Grupo 5 | **Última actualización por:** | Grupo 5 |
+| **Fecha Creación:** | 09/09/2024 | **Fecha última actualización:** | 15/10/2024 |
+
+| **Actor:** | Director de Obra |
+|------------|------------------|
+| **Descripción:** | El Director filtra los templates del Archivo Central seleccionando una de las 6 categorías disponibles para encontrar más rápido el documento que necesita. |
+| **Precondiciones:** | - El usuario está en la vista de Archivo Central (CU-004)<br>- Existen documentos en múltiples categorías |
+| **Postcondiciones:** | - El sistema muestra solo documentos de la categoría seleccionada<br>- El Director puede ver cuántos documentos hay en esa categoría |
+| **Prioridad:** | MEDIA |
+| **Frecuencia de uso:** | Semanal (cada vez que accede al Archivo) |
+
+| **Flujo Normal:** | **Actor / Sistema** |
+|-------------------|---------------------|
+| 1. El Director visualiza la lista de categorías disponibles | Actor |
+| 2. El Director hace click en una categoría (Administrativos/Técnicos/Legales/Financieros/Seguridad/Calidad) | Actor |
+| 3. El sistema filtra la lista de documentos mostrando solo los de esa categoría | Sistema |
+| 4. El sistema actualiza el contador de documentos mostrados | Sistema |
+| 5. El Director revisa los documentos filtrados | Actor |
+
+| **Flujos Alternativos:** | **Actor / Sistema** |
+|---------------------------|---------------------|
+| **FA1: Mostrar Todos** | |
+| 5a. El Director hace click en botón "Todos" o limpia el filtro | Actor |
+| 5b. El sistema vuelve a mostrar los 24 documentos completos | Sistema |
+
+| **Excepciones:** | |
+|------------------|--|
+| **EX1:** La categoría seleccionada no tiene documentos | Sistema muestra mensaje "No hay documentos en esta categoría" |
+
+| **Includes:** | Este CU es incluido por CU-004 (Acceder a Archivo Central) |
+| **Extends:** | Ninguno |
+| **Requerimientos No Funcionales:** | RNF-07 (respuesta <500ms) |
+| **Notas:** | El filtrado es instantáneo (sin llamadas a backend en MVP). |
+
+---
+
+### **CU-006: Navegar a Módulo de Costos**
+
+| Caso de Uso ID: | CU-006 |
+|-----------------|---------|
+| **Caso de Uso Nombre:** | Navegar a Módulo de Costos |
+| **Creado por:** | Grupo 5 | **Última actualización por:** | Grupo 5 |
+| **Fecha Creación:** | 09/09/2024 | **Fecha última actualización:** | 15/10/2024 |
+
+| **Actor:** | Director de Obra |
+|------------|------------------|
+| **Descripción:** | El Director navega desde la vista de detalle de obra hacia el módulo de costos para revisar información financiera de esa obra específica (presupuesto, gastos, partidas). |
+| **Precondiciones:** | - El usuario está en la vista de Detalle de Obra (CU-002)<br>- La obra seleccionada tiene datos financieros asociados |
+| **Postcondiciones:** | - El Director visualiza un resumen financiero de la obra<br>- Puede ver las partidas presupuestarias principales |
+| **Prioridad:** | MEDIA |
+| **Frecuencia de uso:** | Semanal (1-2 veces por semana) |
+
+| **Flujo Normal:** | **Actor / Sistema** |
+|-------------------|---------------------|
+| 1. El Director hace click en botón "Ver Costos" desde la vista de Detalle de Obra | Actor |
+| 2. El sistema carga la vista simplificada de costos | Sistema |
+| 3. El sistema muestra: presupuesto total, gasto actual, % ejecutado, desvío | Sistema |
+| 4. El sistema muestra top 5 partidas con mayor gasto (gráfico de torta) | Sistema |
+| 5. El Director revisa el resumen financiero | Actor |
+
+| **Flujos Alternativos:** | **Actor / Sistema** |
+|---------------------------|---------------------|
+| **FA1: Ver Dashboard Financiero Completo** | |
+| 5a. El Director hace click en "Ver Dashboard Financiero Completo" | Actor |
+| 5b. El sistema redirige al módulo Contador (CU-007) | Sistema |
+| **FA2: Volver a Detalle de Obra** | |
+| 5a. El Director hace click en "← Volver" | Actor |
+| 5b. El sistema regresa a CU-002 (Consultar Detalle de Obra) | Sistema |
+
+| **Excepciones:** | |
+|------------------|--|
+| **EX1:** La obra no tiene datos financieros cargados | Sistema muestra mensaje "No hay datos de costos para esta obra" |
+
+| **Includes:** | Ninguno |
+| **Extends:** | Ninguno |
+| **Requerimientos No Funcionales:** | RNF-06 (carga <2seg) |
+| **Notas:** | Esta es una vista simplificada. Para análisis financiero completo, el Contador usa CU-007. |
+
+---
+
+### **CU-007: Visualizar Dashboard Financiero**
+
+| Caso de Uso ID: | CU-007 |
+|-----------------|---------|
+| **Caso de Uso Nombre:** | Visualizar Dashboard Financiero |
+| **Creado por:** | Grupo 5 | **Última actualización por:** | Grupo 5 |
+| **Fecha Creación:** | 09/09/2024 | **Fecha última actualización:** | 15/10/2024 |
+
+| **Actor:** | Contador/Administrador |
+|------------|------------------|
+| **Descripción:** | El Contador accede al dashboard financiero consolidado que muestra resumen de gastos de todas las obras, alertas de desvíos presupuestarios y acceso a detalle por obra. |
+| **Precondiciones:** | - El usuario ha iniciado sesión como "Contador"<br>- Existen obras con datos financieros pre-cargados |
+| **Postcondiciones:** | - El Contador visualiza el estado financiero de todas las obras<br>- Puede identificar obras con desvíos presupuestarios<br>- Puede acceder a detalle de partidas por obra |
+| **Prioridad:** | ALTA |
+| **Frecuencia de uso:** | Diaria o inter-diaria (2-4 veces por semana) |
+
+| **Flujo Normal:** | **Actor / Sistema** |
+|-------------------|---------------------|
+| 1. El Contador accede al módulo Contador | Actor |
+| 2. El sistema carga y muestra el dashboard financiero | Sistema |
+| 3. El sistema muestra resumen general: presupuesto total (todas obras), gastado total, % ejecución promedio | Sistema |
+| 4. El sistema muestra contador de alertas activas (partidas >85%) | Sistema |
+| 5. El sistema lista todas las obras con: nombre, presupuesto, gastado, barra de progreso, alerta si hay desvío | Sistema |
+| 6. El Contador revisa el estado financiero consolidado | Actor |
+
+| **Flujos Alternativos:** | **Actor / Sistema** |
+|---------------------------|---------------------|
+| **FA1: Ver Detalle de Partidas de una Obra** | |
+| 6a. El Contador hace click en una obra específica | Actor |
+| 6b. El sistema navega a CU-008 (Visualizar Partidas Presupuestarias) | Sistema |
+| **FA2: Consultar Resumen de Gastos** | |
+| 6a. El Contador hace click en "Ver Resumen Consolidado" | Actor |
+| 6b. El sistema navega a CU-011 (Consultar Resumen de Gastos por Obra) | Sistema |
+
+| **Excepciones:** | |
+|------------------|--|
+| **EX1:** No hay datos financieros cargados | Sistema muestra mensaje "No hay datos financieros disponibles" |
+
+| **Includes:** | Puede incluir CU-008 (Visualizar Partidas Presupuestarias) |
+| **Extends:** | Ninguno |
+| **Requerimientos No Funcionales:** | RNF-01 (intuitivo), RNF-06 (carga <2seg), RNF-10 (responsive) |
+| **Notas:** | Este dashboard es el punto de entrada principal del rol Contador. En v1.0 se agregará gráfico de tendencias temporales. |
+
+---
+
+### **CU-008: Visualizar Partidas Presupuestarias**
+
+| Caso de Uso ID: | CU-008 |
+|-----------------|---------|
+| **Caso de Uso Nombre:** | Visualizar Partidas Presupuestarias |
+| **Creado por:** | Grupo 5 | **Última actualización por:** | Grupo 5 |
+| **Fecha Creación:** | 09/09/2024 | **Fecha última actualización:** | 15/10/2024 |
+
+| **Actor:** | Contador/Administrador |
+|------------|------------------|
+| **Descripción:** | El Contador visualiza el detalle de las 17 partidas presupuestarias de una obra específica, con montos presupuestados, gastados, porcentaje de ejecución y desvíos. |
+| **Precondiciones:** | - El usuario está en el Dashboard Financiero (CU-007)<br>- Ha seleccionado una obra específica<br>- La obra tiene partidas presupuestarias definidas |
+| **Postcondiciones:** | - El Contador conoce el estado de ejecución de cada partida<br>- Puede identificar partidas con riesgo de sobrecosto<br>- Puede tomar decisiones de control de gastos |
+| **Prioridad:** | ALTA |
+| **Frecuencia de uso:** | Semanal (2-3 veces por semana) |
+
+| **Flujo Normal:** | **Actor / Sistema** |
+|-------------------|---------------------|
+| 1. El sistema muestra tabla con las 17 partidas presupuestarias | Sistema |
+| 2. Para cada partida, el sistema muestra: número, nombre, monto presupuestado, monto gastado, % ejecutado, desvío | Sistema |
+| 3. El sistema aplica código de colores: verde (<70%), amarillo (70-85%), rojo (>85%) | Sistema |
+| 4. El sistema muestra gráficos: torta (distribución de gastos), barras (top 5 partidas) | Sistema |
+| 5. El Contador analiza el estado de las partidas | Actor |
+
+| **Flujos Alternativos:** | **Actor / Sistema** |
+|---------------------------|---------------------|
+| **FA1: Consultar Desvíos** | |
+| 5a. El Contador hace click en una partida con alerta roja | Actor |
+| 5b. El sistema navega a CU-009 (Consultar Desvíos Presupuestarios) | Sistema |
+| **FA2: Ordenar Partidas** | |
+| 5a. El Contador hace click en encabezado de columna (ej: "% Ejecutado") | Actor |
+| 5b. El sistema reordena la tabla según ese criterio | Sistema |
+
+| **Excepciones:** | |
+|------------------|--|
+| **EX1:** La obra no tiene partidas definidas | Sistema muestra mensaje "Esta obra no tiene partidas presupuestarias" |
+
+| **Includes:** | Este CU es incluido por CU-007 (Visualizar Dashboard Financiero) |
+| **Extends:** | Ninguno |
+| **Requerimientos No Funcionales:** | RNF-03 (terminología del dominio), RNF-07 (respuesta <500ms) |
+| **Notas:** | Las 17 partidas fueron validadas con el Contador: Movimiento de suelos, Estructuras, Mampostería, Inst. sanitaria, Inst. eléctrica, Inst. gas, Revoques, Aberturas, Pisos, Pintura, Artefactos, Terminaciones eléctricas, Muebles, Limpieza, Documentación, Varios, Imprevistos. |
+
+---
+
+### **CU-009: Consultar Desvíos Presupuestarios**
+
+| Caso de Uso ID: | CU-009 |
+|-----------------|---------|
+| **Caso de Uso Nombre:** | Consultar Desvíos Presupuestarios |
+| **Creado por:** | Grupo 5 | **Última actualización por:** | Grupo 5 |
+| **Fecha Creación:** | 09/09/2024 | **Fecha última actualización:** | 15/10/2024 |
+
+| **Actor:** | Contador/Administrador |
+|------------|------------------|
+| **Descripción:** | El Contador consulta información detallada sobre desvíos presupuestarios de una partida específica que ha superado el umbral esperado, para analizar causas y tomar decisiones correctivas. |
+| **Precondiciones:** | - El usuario está en la vista de Partidas Presupuestarias (CU-008)<br>- Ha seleccionado una partida con desvío (% ejecutado diferente al esperado) |
+| **Postcondiciones:** | - El Contador comprende el origen del desvío<br>- Puede evaluar si requiere intervención |
+| **Prioridad:** | ALTA |
+| **Frecuencia de uso:** | Cuando se detectan desvíos (variable) |
+
+| **Flujo Normal:** | **Actor / Sistema** |
+|-------------------|---------------------|
+| 1. El Contador selecciona una partida con desvío desde CU-008 | Actor |
+| 2. El sistema muestra detalle ampliado de la partida | Sistema |
+| 3. El sistema muestra: presupuesto inicial, gasto actual, desvío en $ y %, avance físico esperado vs real | Sistema |
+| 4. El sistema muestra histórico de gastos en esa partida (si disponible) | Sistema |
+| 5. El Contador analiza la información del desvío | Actor |
+
+| **Flujos Alternativos:** | **Actor / Sistema** |
+|---------------------------|---------------------|
+| **FA1: Ver Alerta de Desvío** | |
+| 5a. Si la partida >85%, el sistema activa CU-010 (Visualizar Alerta de Desvío) | Sistema |
+| **FA2: Volver a Lista de Partidas** | |
+| 5a. El Contador hace click en "← Volver" | Actor |
+| 5b. El sistema regresa a CU-008 (Visualizar Partidas Presupuestarias) | Sistema |
+
+| **Excepciones:** | |
+|------------------|--|
+| **EX1:** No hay información detallada del desvío | Sistema muestra solo datos básicos disponibles |
+
+| **Includes:** | Ninguno |
+| **Extends:** | CU-010 (Visualizar Alerta de Desvío) se activa cuando % >85% |
+| **Requerimientos No Funcionales:** | RNF-03 (terminología), RNF-06 (carga <2seg) |
+| **Notas:** | En MVP, el detalle es limitado (solo % ejecutado). En v1.0 se mostrará histórico de gastos individuales por compra. |
+
+---
+
+### **CU-010: Visualizar Alerta de Desvío**
+
+| Caso de Uso ID: | CU-010 |
+|-----------------|---------|
+| **Caso de Uso Nombre:** | Visualizar Alerta de Desvío |
+| **Creado por:** | Grupo 5 | **Última actualización por:** | Grupo 5 |
+| **Fecha Creación:** | 09/09/2024 | **Fecha última actualización:** | 15/10/2024 |
+
+| **Actor:** | Contador/Administrador |
+|------------|------------------|
+| **Descripción:** | El sistema genera y muestra automáticamente una alerta visual destacada cuando una partida presupuestaria supera el 85% de su presupuesto asignado, para permitir intervención temprana. |
+| **Precondiciones:** | - Una partida presupuestaria ha alcanzado o superado el 85% de ejecución<br>- El Contador está en una vista que muestra partidas (CU-007 o CU-008) |
+| **Postcondiciones:** | - La alerta es visible y destacada<br>- El Contador es consciente del riesgo de sobrecosto<br>- Puede tomar acción preventiva |
+| **Prioridad:** | ALTA |
+| **Frecuencia de uso:** | Cuando se cumple condición (>85%) |
+
+| **Flujo Normal:** | **Actor / Sistema** |
+|-------------------|---------------------|
+| 1. El sistema detecta que una partida ha superado 85% de ejecución | Sistema |
+| 2. El sistema marca la partida con indicador visual rojo (background, badge, ícono) | Sistema |
+| 3. El sistema incrementa el contador de "Alertas Activas" en el dashboard | Sistema |
+| 4. El Contador visualiza la alerta destacada | Actor |
+| 5. El Contador prioriza revisión de esa partida | Actor |
+
+| **Flujos Alternativos:** | **Actor / Sistema** |
+|---------------------------|---------------------|
+| **FA1: Navegar a Detalle de Alerta** | |
+| 5a. El Contador hace click en la partida con alerta | Actor |
+| 5b. El sistema navega a CU-009 (Consultar Desvíos Presupuestarios) | Sistema |
+
+| **Excepciones:** | |
+|------------------|--|
+| **EX1:** El umbral de alerta no está correctamente configurado | Sistema usa valor por defecto (85%) |
+
+| **Includes:** | Ninguno |
+| **Extends:** | Este CU extiende CU-009 (Consultar Desvíos Presupuestarios) |
+| **Requerimientos No Funcionales:** | RNF-05 (superior a método actual - antes no había alertas automáticas) |
+| **Notas:** | El umbral de 85% fue definido con el Contador. En v1.0 será configurable por partida. Regla de negocio crítica: cuando % ejecutado ≥ 85%, activar alerta roja. |
+
+---
+
+### **CU-011: Consultar Resumen de Gastos por Obra**
+
+| Caso de Uso ID: | CU-011 |
+|-----------------|---------|
+| **Caso de Uso Nombre:** | Consultar Resumen de Gastos por Obra |
+| **Creado por:** | Grupo 5 | **Última actualización por:** | Grupo 5 |
+| **Fecha Creación:** | 09/09/2024 | **Fecha última actualización:** | 15/10/2024 |
+
+| **Actor:** | Contador/Administrador |
+|------------|------------------|
+| **Descripción:** | El Contador visualiza un resumen consolidado de gastos de múltiples obras en una sola vista, con totales por obra, comparación presupuesto vs. gastado, y ranking de obras por nivel de gasto. |
+| **Precondiciones:** | - El usuario está en el Dashboard Financiero (CU-007)<br>- Existen múltiples obras con datos financieros |
+| **Postcondiciones:** | - El Contador tiene visibilidad consolidada de gastos<br>- Puede comparar performance financiera entre obras<br>- Puede identificar obras con mayor consumo presupuestario |
+| **Prioridad:** | MEDIA |
+| **Frecuencia de uso:** | Semanal (al final de semana o mes) |
+
+| **Flujo Normal:** | **Actor / Sistema** |
+|-------------------|---------------------|
+| 1. El Contador accede a "Ver Resumen Consolidado" desde Dashboard Financiero | Actor |
+| 2. El sistema carga vista de resumen con tabla de obras | Sistema |
+| 3. Para cada obra, el sistema muestra: nombre, presupuesto total, gastado total, % ejecutado, desvío | Sistema |
+| 4. El sistema muestra totales generales al final de la tabla | Sistema |
+| 5. El sistema muestra gráfico comparativo (barras: presupuesto vs. gastado por obra) | Sistema |
+| 6. El Contador analiza el resumen consolidado | Actor |
+
+| **Flujos Alternativos:** | **Actor / Sistema** |
+|---------------------------|---------------------|
+| **FA1: Ordenar por Columna** | |
+| 6a. El Contador hace click en encabezado de columna (ej: "% Ejecutado") | Actor |
+| 6b. El sistema reordena la tabla según ese criterio | Sistema |
+| **FA2: Ver Detalle de Obra Específica** | |
+| 6a. El Contador hace click en una obra | Actor |
+| 6b. El sistema navega a CU-008 (Visualizar Partidas Presupuestarias de esa obra) | Sistema |
+
+| **Excepciones:** | |
+|------------------|--|
+| **EX1:** Solo hay una obra con datos | Sistema muestra mensaje informativo "Resumen de 1 obra" pero igual muestra tabla |
+
+| **Includes:** | Ninguno |
+| **Extends:** | Ninguno |
+| **Requerimientos No Funcionales:** | RNF-06 (carga <2seg), RNF-10 (responsive) |
+| **Notas:** | Esta vista es especialmente útil cuando se gestionan 6-7 obras en paralelo. Permite detectar obras con problemas financieros de un vistazo. |
 
 ---
 
@@ -1148,6 +1543,402 @@ Las siguientes funcionalidades **NO** están incluidas en el MVP v0.1 porque:
 | **Extends:** | Ninguno |
 | **Requerimientos No Funcionales:** | RNF-01 (intuitivo), RNF-02 (usabilidad 4.0/5), RNF-05 (superior a papel), RNF-10 (responsive móvil), RNF-13 (componentes reutilizables) |
 | **Notas:** | Este CU es crítico y fue el más validado en las pruebas con usuarios. Tiempo promedio de carga: 8 minutos (vs. 15 minutos con papel+WhatsApp). En v1.0 se agregará carga de fotos y modo offline. |
+
+---
+
+### **CU-013: Seleccionar Obra**
+
+| Caso de Uso ID: | CU-013 |
+|-----------------|---------|
+| **Caso de Uso Nombre:** | Seleccionar Obra |
+| **Creado por:** | Grupo 5 | **Última actualización por:** | Grupo 5 |
+| **Fecha Creación:** | 09/09/2024 | **Fecha última actualización:** | 15/10/2024 |
+
+| **Actor:** | Capataz de Obra |
+|------------|------------------|
+| **Descripción:** | El Capataz selecciona la obra para la cual está registrando el parte diario desde una lista desplegable de obras activas. |
+| **Precondiciones:** | - El Capataz está en el formulario de Parte Diario (CU-012)<br>- Existen obras activas en el sistema |
+| **Postcondiciones:** | - La obra queda seleccionada para el parte diario<br>- El formulario se asocia a esa obra específica |
+| **Prioridad:** | ALTA |
+| **Frecuencia de uso:** | Diaria (cada vez que registra parte diario) |
+
+| **Flujo Normal:** | **Actor / Sistema** |
+|-------------------|---------------------|
+| 1. El Capataz visualiza el campo "Obra" con lista desplegable | Actor |
+| 2. El Capataz hace click en el dropdown | Actor |
+| 3. El sistema muestra lista de obras activas (nombre y dirección) | Sistema |
+| 4. El Capataz selecciona la obra correspondiente | Actor |
+| 5. El sistema registra la selección y actualiza el formulario | Sistema |
+
+| **Flujos Alternativos:** | **Actor / Sistema** |
+|---------------------------|---------------------|
+| **FA1: Búsqueda por Nombre** | |
+| 3a. El Capataz comienza a escribir el nombre de la obra | Actor |
+| 3b. El sistema filtra la lista en tiempo real | Sistema |
+
+| **Excepciones:** | |
+|------------------|--|
+| **EX1:** No hay obras activas | Sistema muestra mensaje "No hay obras disponibles" y deshabilita guardado |
+
+| **Includes:** | Este CU es incluido por CU-012 (Registrar Parte Diario) |
+| **Extends:** | Ninguno |
+| **Requerimientos No Funcionales:** | RNF-01 (intuitivo), RNF-07 (respuesta <500ms) |
+| **Notas:** | En MVP hay 5 obras pre-cargadas. En v1.0, el dropdown podría filtrar solo obras asignadas al capataz específico. |
+
+---
+
+### **CU-014: Agregar Personal Presente**
+
+| Caso de Uso ID: | CU-014 |
+|-----------------|---------|
+| **Caso de Uso Nombre:** | Agregar Personal Presente |
+| **Creado por:** | Grupo 5 | **Última actualización por:** | Grupo 5 |
+| **Fecha Creación:** | 09/09/2024 | **Fecha última actualización:** | 15/10/2024 |
+
+| **Actor:** | Capataz de Obra |
+|------------|------------------|
+| **Descripción:** | El Capataz agrega uno o varios trabajadores al parte diario, especificando nombre, rol (Oficial/Ayudante/Especialista) y horas trabajadas por cada uno. |
+| **Precondiciones:** | - El Capataz está en el formulario de Parte Diario (CU-012)<br>- Ha seleccionado una obra (CU-013) |
+| **Postcondiciones:** | - Los trabajadores quedan registrados en el parte diario<br>- El sistema valida que haya al menos 1 trabajador antes de permitir guardar |
+| **Prioridad:** | ALTA |
+| **Frecuencia de uso:** | Diaria (múltiples trabajadores por día) |
+
+| **Flujo Normal:** | **Actor / Sistema** |
+|-------------------|---------------------|
+| 1. El Capataz hace click en botón "+ Agregar Trabajador" | Actor |
+| 2. El sistema agrega una nueva fila a la lista de personal | Sistema |
+| 3. El Capataz completa campo "Nombre" (input texto) | Actor |
+| 4. El Capataz selecciona "Rol" desde dropdown (Oficial/Ayudante/Especialista) | Actor |
+| 5. El Capataz ingresa "Horas Trabajadas" (input número, validación 1-24) | Actor |
+| 6. El sistema valida los campos y habilita guardar si son correctos | Sistema |
+| 7. El Capataz puede repetir pasos 1-5 para agregar más trabajadores | Actor |
+
+| **Flujos Alternativos:** | **Actor / Sistema** |
+|---------------------------|---------------------|
+| **FA1: Eliminar Trabajador** | |
+| 7a. El Capataz hace click en botón "✕" junto a un trabajador | Actor |
+| 7b. El sistema elimina esa fila de la lista | Sistema |
+| **FA2: Editar Trabajador** | |
+| 7a. El Capataz hace click en campos de un trabajador ya agregado | Actor |
+| 7b. El sistema permite modificar nombre, rol o horas | Sistema |
+
+| **Excepciones:** | |
+|------------------|--|
+| **EX1:** Horas fuera de rango (0 o >24) | Sistema muestra error "Las horas deben estar entre 1 y 24" |
+| **EX2:** Nombre vacío | Sistema muestra error "El nombre es obligatorio" |
+
+| **Includes:** | Este CU es incluido por CU-012 (Registrar Parte Diario) |
+| **Extends:** | Ninguno |
+| **Requerimientos No Funcionales:** | RNF-01 (intuitivo), RNF-10 (responsive móvil) |
+| **Notas:** | En v1.0 se agregará auto-completado de nombres desde base de datos de personal frecuente. Validación: al menos 1 trabajador es obligatorio para guardar el parte. |
+
+---
+
+### **CU-015: Registrar Tareas Realizadas**
+
+| Caso de Uso ID: | CU-015 |
+|-----------------|---------|
+| **Caso de Uso Nombre:** | Registrar Tareas Realizadas |
+| **Creado por:** | Grupo 5 | **Última actualización por:** | Grupo 5 |
+| **Fecha Creación:** | 09/09/2024 | **Fecha última actualización:** | 15/10/2024 |
+
+| **Actor:** | Capataz de Obra |
+|------------|------------------|
+| **Descripción:** | El Capataz registra descripción detallada de las tareas ejecutadas durante la jornada, incluyendo métricas cuantificables (metros lineales, metros cuadrados, unidades instaladas, etc.). |
+| **Precondiciones:** | - El Capataz está en el formulario de Parte Diario (CU-012)<br>- Ha seleccionado una obra (CU-013) |
+| **Postcondiciones:** | - Las tareas quedan documentadas en el parte diario<br>- La información es accesible para Director y Contador<br>- Queda evidencia de avance para cálculo de progreso de hitos |
+| **Prioridad:** | ALTA |
+| **Frecuencia de uso:** | Diaria (una vez por parte diario) |
+
+| **Flujo Normal:** | **Actor / Sistema** |
+|-------------------|---------------------|
+| 1. El Capataz visualiza campo "Tareas Realizadas" (textarea multi-línea) | Actor |
+| 2. El Capataz ingresa descripción detallada de tareas con métricas | Actor |
+| 3. El sistema valida que el campo no esté vacío | Sistema |
+| 4. El Capataz puede usar saltos de línea para separar diferentes tareas | Actor |
+
+| **Flujos Alternativos:** | **Actor / Sistema** |
+|---------------------------|---------------------|
+| **FA1: Copiar Tareas de Ayer** | |
+| 2a. El Capataz hace click en botón "Copiar tareas de ayer" (futuro v1.0) | Actor |
+| 2b. El sistema pre-completa el campo con tareas del día anterior | Sistema |
+| 2c. El Capataz edita según corresponda | Actor |
+
+| **Excepciones:** | |
+|------------------|--|
+| **EX1:** Campo vacío al intentar guardar | Sistema muestra error "Las tareas realizadas son obligatorias" |
+| **EX2:** Descripción muy corta (<10 caracteres) | Sistema muestra advertencia "La descripción parece incompleta" pero permite guardar |
+
+| **Includes:** | Este CU es incluido por CU-012 (Registrar Parte Diario) |
+| **Extends:** | Ninguno |
+| **Requerimientos No Funcionales:** | RNF-03 (terminología del dominio), RNF-10 (responsive móvil) |
+| **Notas:** | Ejemplos validados: "Levantamiento muro perimetral: 15m lineales", "Instalación caños agua fría: 30m", "Revoque grueso sector cocina: 25m²". En v1.0 se agregará templates de tareas frecuentes. |
+
+---
+
+### **CU-016: Registrar Materiales Usados**
+
+| Caso de Uso ID: | CU-016 |
+|-----------------|---------|
+| **Caso de Uso Nombre:** | Registrar Materiales Usados |
+| **Creado por:** | Grupo 5 | **Última actualización por:** | Grupo 5 |
+| **Fecha Creación:** | 09/09/2024 | **Fecha última actualización:** | 15/10/2024 |
+
+| **Actor:** | Capataz de Obra |
+|------------|------------------|
+| **Descripción:** | El Capataz registra los materiales utilizados durante la jornada con cantidades, para control de stock y validación de gastos por parte del Contador. |
+| **Precondiciones:** | - El Capataz está en el formulario de Parte Diario (CU-012)<br>- Ha seleccionado una obra (CU-013) |
+| **Postcondiciones:** | - Los materiales quedan documentados en el parte diario<br>- El Contador puede validar que compras coincidan con uso real<br>- Queda evidencia para control de stock |
+| **Prioridad:** | ALTA |
+| **Frecuencia de uso:** | Diaria (una vez por parte diario) |
+
+| **Flujo Normal:** | **Actor / Sistema** |
+|-------------------|---------------------|
+| 1. El Capataz visualiza campo "Materiales Utilizados" (textarea multi-línea) | Actor |
+| 2. El Capataz ingresa listado de materiales con cantidades y unidades | Actor |
+| 3. El sistema acepta el texto sin validación estricta (campo libre) | Sistema |
+| 4. El Capataz puede usar saltos de línea para separar diferentes materiales | Actor |
+
+| **Flujos Alternativos:** | **Actor / Sistema** |
+|---------------------------|---------------------|
+| **FA1: No se usaron materiales** | |
+| 2a. El Capataz deja el campo vacío o escribe "Ninguno" / "N/A" | Actor |
+| 2b. El sistema acepta el campo vacío (no es obligatorio) | Sistema |
+
+| **Excepciones:** | |
+|------------------|--|
+| Ninguna crítica (campo opcional) | |
+
+| **Includes:** | Este CU es incluido por CU-012 (Registrar Parte Diario) |
+| **Extends:** | Ninguno |
+| **Requerimientos No Funcionales:** | RNF-10 (responsive móvil) |
+| **Notas:** | Ejemplos validados: "Ladrillos comunes: 500 unidades", "Cemento: 5 bolsas de 50kg", "Arena gruesa: 2m³", "Cable 2.5mm: 50m". En v1.0 se agregará selector de materiales desde catálogo con cantidades numéricas estructuradas. |
+
+---
+
+### **CU-017: Guardar Parte Diario**
+
+| Caso de Uso ID: | CU-017 |
+|-----------------|---------|
+| **Caso de Uso Nombre:** | Guardar Parte Diario |
+| **Creado por:** | Grupo 5 | **Última actualización por:** | Grupo 5 |
+| **Fecha Creación:** | 09/09/2024 | **Fecha última actualización:** | 15/10/2024 |
+
+| **Actor:** | Capataz de Obra |
+|------------|------------------|
+| **Descripción:** | El sistema valida y guarda el parte diario completo en persistencia local (localStorage en MVP), generando un ID único y timestamp para trazabilidad. |
+| **Precondiciones:** | - El Capataz ha completado el formulario de Parte Diario (CU-012)<br>- Campos obligatorios están completos (obra, fecha, ≥1 trabajador, tareas) |
+| **Postcondiciones:** | - El parte diario queda persistido en localStorage<br>- Se genera confirmación visual al usuario<br>- El formulario se limpia para siguiente carga<br>- La información es accesible para Director y Contador |
+| **Prioridad:** | ALTA |
+| **Frecuencia de uso:** | Diaria (una vez al finalizar carga de parte) |
+
+| **Flujo Normal:** | **Actor / Sistema** |
+|-------------------|---------------------|
+| 1. El Capataz presiona botón "Guardar Parte Diario" | Actor |
+| 2. El sistema valida campos obligatorios (obra, fecha, ≥1 trabajador, tareas) | Sistema |
+| 3. El sistema valida formato de datos (horas 1-24, fecha válida) | Sistema |
+| 4. El sistema genera ID único para el parte diario | Sistema |
+| 5. El sistema agrega timestamp (fecha y hora de guardado) | Sistema |
+| 6. El sistema serializa datos a JSON | Sistema |
+| 7. El sistema guarda en localStorage con clave "partes_diarios_[obra_id]" | Sistema |
+| 8. El sistema muestra toast/mensaje "Parte diario guardado exitosamente" (3 segundos) | Sistema |
+| 9. El sistema limpia el formulario para siguiente carga | Sistema |
+
+| **Flujos Alternativos:** | **Actor / Sistema** |
+|---------------------------|---------------------|
+| **FA1: Validación Fallida** | |
+| 3a. Uno o más campos obligatorios están vacíos o inválidos | Sistema |
+| 3b. El sistema muestra mensaje de error listando campos faltantes | Sistema |
+| 3c. El sistema NO guarda el parte y mantiene datos en formulario | Sistema |
+| 3d. El Capataz corrige y vuelve a intentar guardar | Actor |
+
+| **Excepciones:** | |
+|------------------|--|
+| **EX1:** Error de localStorage (navegador sin espacio o permisos) | Sistema muestra "Error al guardar. Verifique espacio disponible o permisos del navegador" |
+| **EX2:** Pérdida de datos antes de guardar (recarga de página accidental) | Datos se pierden (en v1.0 se implementará auto-guardado temporal) |
+
+| **Includes:** | Este CU es incluido por CU-012 (Registrar Parte Diario) |
+| **Extends:** | Ninguno |
+| **Requerimientos No Funcionales:** | RNF-07 (respuesta <500ms para guardar), RNF-12 (TypeScript con tipado) |
+| **Notas:** | En MVP, localStorage es suficiente para validación. En v1.0 se reemplazará por persistencia en PostgreSQL con API REST. Regla de validación: campos obligatorios son obra, fecha, al menos 1 trabajador, y descripción de tareas. |
+
+---
+
+### **CU-018: Visualizar Partes Diarios Anteriores**
+
+| Caso de Uso ID: | CU-018 |
+|-----------------|---------|
+| **Caso de Uso Nombre:** | Visualizar Partes Diarios Anteriores |
+| **Creado por:** | Grupo 5 | **Última actualización por:** | Grupo 5 |
+| **Fecha Creación:** | 09/09/2024 | **Fecha última actualización:** | 15/10/2024 |
+
+| **Actor:** | Capataz de Obra, Director de Obra |
+|------------|------------------|
+| **Descripción:** | El usuario consulta partes diarios registrados previamente, pudiendo filtrar por obra y fecha para revisar información histórica de personal, tareas y materiales. |
+| **Precondiciones:** | - Existen partes diarios guardados en el sistema<br>- El usuario tiene permisos para consultar partes (Capataz ve solo los suyos, Director ve todos) |
+| **Postcondiciones:** | - El usuario visualiza información histórica de partes diarios<br>- Puede verificar asistencias y tareas de días anteriores |
+| **Prioridad:** | MEDIA |
+| **Frecuencia de uso:** | Semanal (consultas esporádicas para verificación) |
+
+| **Flujo Normal:** | **Actor / Sistema** |
+|-------------------|---------------------|
+| 1. El usuario accede a la sección "Partes Diarios Anteriores" | Actor |
+| 2. El sistema recupera partes guardados desde localStorage | Sistema |
+| 3. El sistema muestra lista de partes ordenados por fecha (más reciente primero) | Sistema |
+| 4. Para cada parte, el sistema muestra: obra, fecha, cantidad de trabajadores, resumen de tareas | Sistema |
+| 5. El usuario visualiza la lista de partes | Actor |
+
+| **Flujos Alternativos:** | **Actor / Sistema** |
+|---------------------------|---------------------|
+| **FA1: Filtrar por Obra** | |
+| 5a. El usuario selecciona una obra del filtro | Actor |
+| 5b. El sistema muestra solo partes de esa obra | Sistema |
+| **FA2: Ver Detalle de Parte** | |
+| 5a. El usuario hace click en un parte específico | Actor |
+| 5b. El sistema muestra modal o página con detalle completo (personal, horas, tareas, materiales, clima, observaciones) | Sistema |
+
+| **Excepciones:** | |
+|------------------|--|
+| **EX1:** No hay partes guardados | Sistema muestra mensaje "No hay partes diarios registrados" |
+
+| **Includes:** | Ninguno |
+| **Extends:** | Ninguno |
+| **Requerimientos No Funcionales:** | RNF-06 (carga <2seg), RNF-10 (responsive) |
+| **Notas:** | En MVP, los partes se recuperan de localStorage del navegador (volátiles). En v1.0 se consultarán desde base de datos con paginación y búsqueda avanzada. |
+
+---
+
+### **CU-019: Iniciar Sesión (Simulada)**
+
+| Caso de Uso ID: | CU-019 |
+|-----------------|---------|
+| **Caso de Uso Nombre:** | Iniciar Sesión (Simulada) |
+| **Creado por:** | Grupo 5 | **Última actualización por:** | Grupo 5 |
+| **Fecha Creación:** | 09/09/2024 | **Fecha última actualización:** | 15/10/2024 |
+
+| **Actor:** | Usuario (cualquier rol) |
+|------------|------------------|
+| **Descripción:** | El usuario accede al sistema mediante una autenticación simulada que no requiere credenciales reales, seleccionando directamente su rol para pruebas del MVP. |
+| **Precondiciones:** | - El usuario accede a la URL del sistema<br>- No existe sesión activa previa |
+| **Postcondiciones:** | - El usuario queda "autenticado" con el rol seleccionado<br>- Puede acceder al módulo correspondiente a su rol<br>- Se simula contexto de sesión en el navegador |
+| **Prioridad:** | ALTA |
+| **Frecuencia de uso:** | Al inicio de cada sesión de prueba |
+
+| **Flujo Normal:** | **Actor / Sistema** |
+|-------------------|---------------------|
+| 1. El usuario accede a la URL raíz del sistema | Actor |
+| 2. El sistema muestra pantalla de selección de rol (CU-020) | Sistema |
+| 3. El usuario selecciona un rol (Director/Contador/Capataz) | Actor |
+| 4. El sistema simula autenticación exitosa | Sistema |
+| 5. El sistema guarda rol seleccionado en localStorage | Sistema |
+| 6. El sistema redirige al módulo correspondiente al rol | Sistema |
+
+| **Flujos Alternativos:** | **Actor / Sistema** |
+|---------------------------|---------------------|
+| **FA1: Ya existe sesión activa** | |
+| 2a. El sistema detecta rol guardado en localStorage | Sistema |
+| 2b. El sistema redirige directamente al módulo correspondiente sin mostrar selección | Sistema |
+
+| **Excepciones:** | |
+|------------------|--|
+| Ninguna crítica (autenticación simulada siempre exitosa en MVP) | |
+
+| **Includes:** | CU-020 (Seleccionar Rol) |
+| **Extends:** | Ninguno |
+| **Requerimientos No Funcionales:** | RNF-01 (intuitivo), RNF-07 (respuesta <500ms) |
+| **Notas:** | Esta es una autenticación SIMULADA solo para MVP. NO es segura para producción. En v1.0 se implementará NextAuth.js con credenciales reales, hash de contraseñas, y gestión de sesiones segura. |
+
+---
+
+### **CU-020: Seleccionar Rol**
+
+| Caso de Uso ID: | CU-020 |
+|-----------------|---------|
+| **Caso de Uso Nombre:** | Seleccionar Rol |
+| **Creado por:** | Grupo 5 | **Última actualización por:** | Grupo 5 |
+| **Fecha Creación:** | 09/09/2024 | **Fecha última actualización:** | 15/10/2024 |
+
+| **Actor:** | Usuario (cualquier rol) |
+|------------|------------------|
+| **Descripción:** | El usuario selecciona su rol de trabajo (Director/Contador/Capataz) desde una interfaz visual, lo que determina a qué módulo accederá y qué funcionalidades verá. |
+| **Precondiciones:** | - El usuario está en la pantalla de inicio/login<br>- No ha seleccionado rol previamente en esta sesión |
+| **Postcondiciones:** | - El rol queda registrado para la sesión<br>- El usuario es redirigido al módulo correspondiente<br>- La navegación posterior respeta permisos del rol |
+| **Prioridad:** | ALTA |
+| **Frecuencia de uso:** | Al inicio de cada sesión |
+
+| **Flujo Normal:** | **Actor / Sistema** |
+|-------------------|---------------------|
+| 1. El sistema muestra pantalla con 3 opciones de rol (botones grandes) | Sistema |
+| 2. El sistema muestra para cada rol: nombre, descripción breve, ícono representativo | Sistema |
+| 3. El usuario lee las opciones disponibles | Actor |
+| 4. El usuario hace click en el rol que le corresponde | Actor |
+| 5. El sistema registra el rol seleccionado | Sistema |
+| 6. El sistema redirige según rol: Director → Dashboard Obras, Contador → Dashboard Financiero, Capataz → Formulario Parte Diario | Sistema |
+
+| **Flujos Alternativos:** | **Actor / Sistema** |
+|---------------------------|---------------------|
+| **FA1: Cambiar de Rol durante la sesión** | |
+| Este flujo se cubre en CU-021 (Navegar Entre Módulos) | |
+
+| **Excepciones:** | |
+|------------------|--|
+| Ninguna crítica (siempre hay roles disponibles) | |
+
+| **Includes:** | Este CU es incluido por CU-019 (Iniciar Sesión Simulada) |
+| **Extends:** | Ninguno |
+| **Requerimientos No Funcionales:** | RNF-01 (intuitivo), RNF-04 (máx 3 clicks), RNF-10 (responsive) |
+| **Notas:** | En MVP, la selección de rol es libre para facilitar pruebas (cualquier tester puede probar cualquier rol). En v1.0, el rol será asignado por usuario autenticado sin opción de cambio arbitrario. |
+
+---
+
+### **CU-021: Navegar Entre Módulos**
+
+| Caso de Uso ID: | CU-021 |
+|-----------------|---------|
+| **Caso de Uso Nombre:** | Navegar Entre Módulos |
+| **Creado por:** | Grupo 5 | **Última actualización por:** | Grupo 5 |
+| **Fecha Creación:** | 09/09/2024 | **Fecha última actualización:** | 15/10/2024 |
+
+| **Actor:** | Usuario (cualquier rol) |
+|------------|------------------|
+| **Descripción:** | El usuario navega entre diferentes módulos y funcionalidades del sistema usando el menú de navegación, breadcrumbs y botones de acción, manteniendo consistencia en la experiencia de usuario. |
+| **Precondiciones:** | - El usuario ha iniciado sesión (CU-019)<br>- Está visualizando cualquier pantalla del sistema |
+| **Postcondiciones:** | - El usuario accede a la funcionalidad deseada<br>- El contexto de navegación se mantiene (puede volver atrás)<br>- La URL del navegador se actualiza correctamente |
+| **Prioridad:** | ALTA |
+| **Frecuencia de uso:** | Constante (múltiples veces por sesión) |
+
+| **Flujo Normal:** | **Actor / Sistema** |
+|-------------------|---------------------|
+| 1. El usuario identifica la funcionalidad a la que quiere acceder | Actor |
+| 2. El usuario hace click en elemento de navegación (menú, botón, link) | Actor |
+| 3. El sistema valida que el usuario tiene permisos para esa funcionalidad | Sistema |
+| 4. El sistema carga la nueva vista | Sistema |
+| 5. El sistema actualiza la URL y título de página | Sistema |
+| 6. El usuario visualiza la nueva funcionalidad | Actor |
+
+| **Flujos Alternativos:** | **Actor / Sistema** |
+|---------------------------|---------------------|
+| **FA1: Cambiar de Rol (solo MVP)** | |
+| 2a. El usuario hace click en "Cambiar Rol" en el header | Actor |
+| 2b. El sistema muestra nuevamente pantalla de selección de rol (CU-020) | Sistema |
+| 2c. El usuario selecciona otro rol | Actor |
+| 2d. El sistema redirige al módulo del nuevo rol | Sistema |
+| **FA2: Navegar hacia atrás** | |
+| 2a. El usuario hace click en botón "← Volver" | Actor |
+| 2b. El sistema navega a la vista anterior (usando history del navegador) | Sistema |
+| **FA3: Breadcrumbs** | |
+| 2a. El usuario hace click en elemento del breadcrumb (ej: "Dashboard > Detalle de Obra") | Actor |
+| 2b. El sistema navega a esa vista específica | Sistema |
+
+| **Excepciones:** | |
+|------------------|--|
+| **EX1:** Intento de acceso a funcionalidad no permitida para el rol | Sistema muestra mensaje "No tiene permisos para acceder a esta sección" y mantiene en vista actual (en v1.0; en MVP todos pueden ver todo) |
+| **EX2:** Error de navegación (404) | Sistema muestra página de error y botón "Volver al inicio" |
+
+| **Includes:** | Ninguno |
+| **Extends:** | Ninguno |
+| **Requerimientos No Funcionales:** | RNF-04 (máx 3 clicks), RNF-07 (transición <500ms), RNF-10 (responsive) |
+| **Notas:** | El sistema usa Next.js App Router para navegación client-side rápida sin recargas de página completa. En MVP, el control de permisos por rol es relajado para facilitar pruebas; en v1.0 será estricto con middleware de autenticación. |
 
 ---
 
